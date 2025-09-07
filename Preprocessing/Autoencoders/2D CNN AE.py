@@ -55,3 +55,33 @@ def dwt_matrix_1d(filter_banks, signdef iiautoencoder(dataset2, ensoerw):
     plt.ylabel('Loss')
     plt.legend()
     plt.show()
+
+    encoder = Model(inputs=input_layer, outputs=encoded)
+    x_encoded = encoder.predict(dataset_normalized)
+    print("ski")
+    print(x_encoded.shape)
+    x_encoded_reshaped = np.reshape(x_encoded, (x_encoded.shape[0], -1))
+    print("bi")
+    print(x_encoded_reshaped.shape)
+    def hiffest(encoded_data, enso_data):
+      encoded_data = encoded_data[11:]
+      num_samples = encoded_data.shape[0]
+
+      encoded_flattened = encoded_data.reshape(num_samples, -1)
+
+      encoded_flattened = np.nan_to_num(encoded_flattened)
+      correlations = np.array([scipy.stats.pearsonr(encoded_flattened[:, i], enso_data.squeeze())[0] for i in range(56)])
+      correlations = np.nan_to_num(correlations) 
+        
+      highest_corr_index = np.argmax(correlations)
+      highest_corr_data = encoded_data[highest_corr_index]
+      highest_corr = correlations[highest_corr_index]
+
+      print(f"Highest Pearson correlation: {highest_corr}")
+
+      return highest_corr_data
+
+    #highestcorrdat = hiffest(x_encoded_reshaped, ensoerw)
+    return x_encoded
+al_length):
+
